@@ -32,7 +32,7 @@ struct MyNum {
         for (int i = 0;i < _size;i++) {
             double_array[i] = n / _int_array[i];
         }
-        // delete _int_array;
+        free(_int_array);
     }
     void sqrt() {
         for (int i = 0;i < _size;i++) {
