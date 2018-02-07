@@ -69,5 +69,9 @@ struct DeepConvNet {
         params.W6 = randome_randn(4, _param6.num, pre_channel_num, _param6.size, _param6.size) * wight_init_scales.getInt(5);
         params.b6 = zeros(_param6.num);
 
+        params.W7 = randome_randn(2, 64*4*4, hidden_size) * wight_init_scales.getInt(6);
+        params.b7 = zeros(hidden_size);
+        params.W8 = randome_randn(2, hidden_size, output_size) * wight_init_scales.getInt(7);
+        params.b8 = zeros(output_size);
     }
 };
