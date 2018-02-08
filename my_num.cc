@@ -71,6 +71,11 @@ struct MyNum {
         return _res;
     }
 };
+
+MyNum operator*(int x, MyNum y) {
+    return y * x;
+}
+
 MyNum randome_randn(int count, ...) {
     va_list ap;
     va_start(ap, count);

@@ -51,27 +51,27 @@ struct DeepConvNet {
         int pre_channel_num = _input_dim[0];
 
         ParamsArray params = ParamsArray();
-        params.W1 = randome_randn(4, _param1.num, pre_channel_num, _param1.size, _param1.size) * wight_init_scales.getInt(0);
+        params.W1 = wight_init_scales.getInt(0) * randome_randn(4, _param1.num, pre_channel_num, _param1.size, _param1.size);
         params.b1 = zeros(_param1.num);
 
-        params.W2 = randome_randn(4, _param2.num, pre_channel_num, _param2.size, _param2.size) * wight_init_scales.getInt(1);
+        params.W2 = wight_init_scales.getInt(1) * randome_randn(4, _param2.num, pre_channel_num, _param2.size, _param2.size);
         params.b2 = zeros(_param2.num);
 
-        params.W3 = randome_randn(4, _param3.num, pre_channel_num, _param3.size, _param3.size) * wight_init_scales.getInt(2);
+        params.W3 = wight_init_scales.getInt(2) * randome_randn(4, _param3.num, pre_channel_num, _param3.size, _param3.size);
         params.b3 = zeros(_param3.num);
 
-        params.W4 = randome_randn(4, _param4.num, pre_channel_num, _param4.size, _param4.size) * wight_init_scales.getInt(3);
+        params.W4 = wight_init_scales.getInt(3) * randome_randn(4, _param4.num, pre_channel_num, _param4.size, _param4.size);
         params.b4 = zeros(_param4.num);
 
-        params.W5 = randome_randn(4, _param5.num, pre_channel_num, _param5.size, _param5.size) * wight_init_scales.getInt(4);
+        params.W5 = wight_init_scales.getInt(4) * randome_randn(4, _param5.num, pre_channel_num, _param5.size, _param5.size);
         params.b5 = zeros(_param5.num);
 
-        params.W6 = randome_randn(4, _param6.num, pre_channel_num, _param6.size, _param6.size) * wight_init_scales.getInt(5);
+        params.W6 = wight_init_scales.getInt(5) * randome_randn(4, _param6.num, pre_channel_num, _param6.size, _param6.size);
         params.b6 = zeros(_param6.num);
 
-        params.W7 = randome_randn(2, 64*4*4, hidden_size) * wight_init_scales.getInt(6);
+        params.W7 = wight_init_scales.getInt(6) * randome_randn(2, 64*4*4, hidden_size);
         params.b7 = zeros(hidden_size);
-        params.W8 = randome_randn(2, hidden_size, output_size) * wight_init_scales.getInt(7);
+        params.W8 = wight_init_scales.getInt(7) * randome_randn(2, hidden_size, output_size);
         params.b8 = zeros(output_size);
     }
 };
