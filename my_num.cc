@@ -125,3 +125,16 @@ MyNum mynum_pad(MyNum input_data, int** padNum, char* mode) {
     MyNum pad;
     return pad;
 }
+
+MyNum mynum_array(int dimension, int* shape, void* data) {
+    MyNum a;
+    a._dimension = dimension;
+    a._shape = shape;
+    a._int_array = (int*)data;
+    size_t size = 1;
+    for (int i = 0;i < dimension;i++) {
+        size *= shape[i];
+    }
+    a._size = size;
+    return a;
+}
