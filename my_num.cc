@@ -5,6 +5,7 @@
 struct MyNum {
     size_t _size;
     size_t _dimension;
+    int* _shape;
     short _type;
     int *_int_array;
     float *_float_array;
@@ -26,6 +27,8 @@ struct MyNum {
         }
         va_end(ap);
         _size = count;
+        _shape = (int *)malloc(sizeof(int) * 1);
+        _shape[0] = count;
     }
     int sum() {
         int _sum = 0;
@@ -101,11 +104,15 @@ MyNum zeros(int count, ...) {
 
     MyNum data;
 
+    data._shape = (int *)malloc(sizeof(int) * count);
     int size = 1;
     for (int i = 0; i < count; i++ ) {
-        size *= va_arg(ap, int);
+        int arg = va_arg(ap, int);
+        size *= arg;
+        data._shape[i] = arg;
     }
     va_end(ap);
+    data._dimension = count;
     data._size = size;
     data._type = TYPE_INT;
     data._int_array = (int *)malloc(sizeof(int) * size);
@@ -113,4 +120,8 @@ MyNum zeros(int count, ...) {
         data._int_array[i] = 0;
     }
     return data;
+}
+MyNum mynum_pad(MyNum input_data, int** padNum, char* mode) {
+    MyNum pad;
+    return pad;
 }
