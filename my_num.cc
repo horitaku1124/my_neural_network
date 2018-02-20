@@ -73,6 +73,16 @@ struct MyNum {
         }
         return _res;
     }
+
+    void printInternal() {
+        printf("size=%lu\n", _size);
+        printf("dimenstion=%lu\n", _dimension);
+        printf(" -- data --\n");
+        for(size_t i = 0;i < _size;i++) {
+            printf(" %d", _int_array[i]);
+        }
+        printf("\n");
+    }
 };
 
 MyNum operator*(int x, MyNum y) {
@@ -126,15 +136,17 @@ MyNum mynum_pad(MyNum input_data, int** padNum, char* mode) {
     return pad;
 }
 
-MyNum mynum_array(int dimension, int* shape, void* data) {
+MyNum mynum_array_i(int dimension, int* shape, void* data) {
     MyNum a;
     a._dimension = dimension;
-    a._shape = shape;
-    a._int_array = (int*)data;
+    a._shape = (int*)malloc(sizeof(int) * dimension);
     size_t size = 1;
     for (int i = 0;i < dimension;i++) {
         size *= shape[i];
+        a._shape[i] = shape[i];
     }
     a._size = size;
+    a._int_array = (int*)malloc(sizeof(int) * size);
+    memcpy(a._int_array, (int*)data, size * sizeof(int));
     return a;
 }
