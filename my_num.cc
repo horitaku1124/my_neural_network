@@ -137,16 +137,17 @@ MyNum mynum_pad(MyNum input_data, int** padNum, char* mode) {
 }
 
 MyNum mynum_array_i(int dimension, int* shape, void* data) {
-    MyNum a;
-    a._dimension = dimension;
-    a._shape = (int*)malloc(sizeof(int) * dimension);
+    MyNum num;
+    num._dimension = dimension;
+    num._shape = (int*)malloc(sizeof(int) * dimension);
     size_t size = 1;
     for (int i = 0;i < dimension;i++) {
         size *= shape[i];
-        a._shape[i] = shape[i];
+        num._shape[i] = shape[i];
     }
-    a._size = size;
-    a._int_array = (int*)malloc(sizeof(int) * size);
-    memcpy(a._int_array, (int*)data, size * sizeof(int));
-    return a;
+    num._type = TYPE_INT;
+    num._size = size;
+    num._int_array = (int*)malloc(sizeof(int) * size);
+    memcpy(num._int_array, (int*)data, size * sizeof(int));
+    return num;
 }
