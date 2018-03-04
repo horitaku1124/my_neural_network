@@ -43,5 +43,18 @@ int main()
         MyNum m4 = mynum_array_i(2, shape, data);
         m4.printInternal();
     }
+    printf("\n\n-- 5\n");
+    {
+        int shape[] = {3};
+        int data[3] = {1,2,3};
+        MyNum m5 = mynum_array_i(1, shape, data);
+        m5.printInternal();
+
+        int padNum[1][2] = {
+            {3,4}
+        };
+        MyNum m6 = mynum_pad(m5, (int*)padNum, ModeConstant);
+        m6.printInternal();
+    }
     return 0;
 }

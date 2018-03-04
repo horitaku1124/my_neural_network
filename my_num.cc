@@ -1,6 +1,8 @@
-#define TYPE_INT 1;
-#define TYPE_FLOAT 2;
 
+const int TypeInt = 1;
+const int TypeFloat = 2;
+
+const int ModeConstant = 1;
 
 struct MyNum {
     size_t _size;
@@ -15,21 +17,21 @@ struct MyNum {
         _dimension = 0;
         _int_array = NULL;
     }
-    MyNum(int count, ...) {
-        va_list ap;
-        va_start(ap, count);
-        _int_array = (int *)malloc(sizeof(int) * count);
-        _type = TYPE_INT;
-        _dimension = 1;
+    // MyNum(int count, ...) {
+    //     va_list ap;
+    //     va_start(ap, count);
+    //     _int_array = (int *)malloc(sizeof(int) * count);
+    //     _type = TypeInt;
+    //     _dimension = 1;
         
-        for (int i = 0; i < count; i++ ) {
-            _int_array[i] = va_arg(ap, int);
-        }
-        va_end(ap);
-        _size = count;
-        _shape = (int *)malloc(sizeof(int) * 1);
-        _shape[0] = count;
-    }
+    //     for (int i = 0; i < count; i++ ) {
+    //         _int_array[i] = va_arg(ap, int);
+    //     }
+    //     va_end(ap);
+    //     _size = count;
+    //     _shape = (int *)malloc(sizeof(int) * 1);
+    //     _shape[0] = count;
+    // }
     int sum() {
         int _sum = 0;
         for (int i = 0;i < _size;i++) {
@@ -61,11 +63,9 @@ struct MyNum {
         _res._size = _size;
         _res._dimension = _dimension;
         _res._type = _type;
-        int t_int = TYPE_INT;
-        int t_float = TYPE_FLOAT;
-        if (_type == t_int) {
+        if (_type == TypeInt) {
 
-        } else if (_type == t_float) {
+        } else if (_type == TypeFloat) {
             _res._float_array = _float_array;
             for (size_t i = 0;i < _size;i++) {
                 _res._float_array[i] *= x;
@@ -101,7 +101,7 @@ MyNum randome_randn(int count, ...) {
     }
     va_end(ap);
     data._size = size;
-    data._type = TYPE_FLOAT;
+    data._type = TypeFloat;
     data._float_array = (float *)malloc(sizeof(float) * size);
     for (size_t i = 0;i < size;i++) {
         data._float_array[i] = (float)rand() / RAND_MAX;
@@ -124,15 +124,37 @@ MyNum zeros(int count, ...) {
     va_end(ap);
     data._dimension = count;
     data._size = size;
-    data._type = TYPE_INT;
+    data._type = TypeInt;
     data._int_array = (int *)malloc(sizeof(int) * size);
     for (size_t i = 0;i < size;i++) {
         data._int_array[i] = 0;
     }
     return data;
 }
-MyNum mynum_pad(MyNum input_data, int** padNum, char* mode) {
+MyNum mynum_pad(MyNum input_data, int* padNum, int mode) {
     MyNum pad;
+    pad._dimension = input_data._dimension;
+    pad._type = input_data._type;
+    if (input_data._dimension == 1) {
+        int leftPad = padNum[0];
+        int rightPad = padNum[1];
+        // printf("leftPad=%d rightPad=%d\n", padNum[0], padNum[1]);
+        size_t newSize = leftPad + input_data._size + rightPad;
+        pad._size = newSize;
+        if (pad._type == TypeInt) {
+            pad._int_array = (int *)malloc(sizeof(int) * newSize);
+            for (int i = 0;i < leftPad;i++) {
+                pad._int_array[i] = 0;
+            }
+            for (int i = 0;i < input_data._size;i++) {
+                pad._int_array[i + leftPad] = input_data._int_array[i];
+            }
+            for (int i = 0;i < rightPad;i++) {
+                pad._int_array[i + leftPad + input_data._size] = 0;
+            }
+        }
+    }
+
     return pad;
 }
 
@@ -145,7 +167,7 @@ MyNum mynum_array_i(int dimension, int* shape, void* data) {
         size *= shape[i];
         num._shape[i] = shape[i];
     }
-    num._type = TYPE_INT;
+    num._type = TypeInt;
     num._size = size;
     num._int_array = (int*)malloc(sizeof(int) * size);
     memcpy(num._int_array, (int*)data, size * sizeof(int));
